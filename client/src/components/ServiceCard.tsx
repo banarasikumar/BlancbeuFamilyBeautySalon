@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Clock, Star } from "lucide-react";
+import { Clock, Star, Check } from "lucide-react";
 
 interface ServiceCardProps {
   id: string;
@@ -12,6 +12,7 @@ interface ServiceCardProps {
   rating: number;
   image: string;
   category: string;
+  isSelected?: boolean;
   onBook?: (serviceId: string) => void;
 }
 
@@ -24,15 +25,16 @@ export default function ServiceCard({
   rating,
   image,
   category,
+  isSelected = false,
   onBook,
 }: ServiceCardProps) {
-  const handleBook = () => {
-    console.log(`Booking service: ${name}`);
+  const handleToggle = () => {
+    console.log(`${isSelected ? 'Removing' : 'Adding'} service: ${name}`);
     onBook?.(id);
   };
 
   return (
-    <Card className="overflow-hidden hover-elevate group cursor-pointer">
+    <Card className={`overflow-hidden hover-elevate group cursor-pointer ${isSelected ? 'ring-2 ring-primary bg-primary/5' : ''}`}>
       <div className="relative">
         <div 
           className="h-48 bg-cover bg-center transition-transform group-hover:scale-105"
@@ -43,9 +45,16 @@ export default function ServiceCard({
             {category}
           </Badge>
         </div>
-        <div className="absolute top-3 right-3 flex items-center space-x-1 bg-background/80 backdrop-blur-sm rounded-full px-2 py-1">
-          <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" />
-          <span className="text-xs font-medium">{rating}</span>
+        <div className="absolute top-3 right-3 flex items-center space-x-1">
+          {isSelected && (
+            <div className="bg-primary text-primary-foreground rounded-full p-1 mr-2">
+              <Check className="w-3 h-3" />
+            </div>
+          )}
+          <div className="flex items-center space-x-1 bg-background/80 backdrop-blur-sm rounded-full px-2 py-1">
+            <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" />
+            <span className="text-xs font-medium">{rating}</span>
+          </div>
         </div>
       </div>
       
@@ -67,11 +76,19 @@ export default function ServiceCard({
           </div>
           
           <Button 
-            onClick={handleBook}
+            onClick={handleToggle}
             className="w-full"
+            variant={isSelected ? "secondary" : "default"}
             data-testid={`button-book-${id}`}
           >
-            Book Now
+            {isSelected ? (
+              <>
+                <Check className="w-4 h-4 mr-2" />
+                Added
+              </>
+            ) : (
+              'Add Service'
+            )}
           </Button>
         </div>
       </CardContent>

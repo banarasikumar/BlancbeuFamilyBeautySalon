@@ -6,14 +6,15 @@ import ThemeToggle from "@/components/ThemeToggle";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, CheckCircle, Calendar, User, Scissors } from "lucide-react";
+import { ArrowLeft, CheckCircle, Calendar, User, Scissors, DollarSign, Clock } from "lucide-react";
+import { calculateServiceTotals } from "@shared/services";
 
 interface BookingProps {
   onBack?: () => void;
 }
 
 export default function Booking({ onBack }: BookingProps) {
-  const [selectedService, setSelectedService] = useState<string>("");
+  const [selectedServices, setSelectedServices] = useState<string[]>([]);
   const [selectedStaff, setSelectedStaff] = useState<string>("");
   const [selectedDateTime, setSelectedDateTime] = useState<{date: string, time: string} | null>(null);
 
@@ -46,8 +47,19 @@ export default function Booking({ onBack }: BookingProps) {
   ];
 
   const handleServiceSelect = (serviceId: string) => {
-    setSelectedService(serviceId);
-    console.log(`Selected service: ${serviceId}`);
+    setSelectedServices(prev => {
+      if (prev.includes(serviceId)) {
+        // Remove service if already selected
+        const updated = prev.filter(id => id !== serviceId);
+        console.log(`Removed service: ${serviceId}`);
+        return updated;
+      } else {
+        // Add service if not selected
+        const updated = [...prev, serviceId];
+        console.log(`Added service: ${serviceId}`);
+        return updated;
+      }
+    });
   };
 
   const handleStaffSelect = (staffId: string) => {
@@ -61,13 +73,17 @@ export default function Booking({ onBack }: BookingProps) {
   };
 
   const handleConfirmBooking = () => {
-    if (selectedService && selectedStaff && selectedDateTime) {
-      console.log("Confirmed booking with all selections");
+    if (selectedServices.length > 0 && selectedStaff && selectedDateTime) {
+      console.log("Confirmed booking with all selections:", {
+        services: selectedServices,
+        staff: selectedStaff,
+        dateTime: selectedDateTime
+      });
       // TODO: Submit booking to backend
     }
   };
 
-  const isComplete = selectedService && selectedStaff && selectedDateTime;
+  const isComplete = selectedServices.length > 0 && selectedStaff && selectedDateTime;
 
   return (
     <div className="min-h-screen bg-background">
@@ -87,8 +103,8 @@ export default function Booking({ onBack }: BookingProps) {
       {/* Progress Indicator */}
       <div className="fixed top-16 left-0 right-0 z-30 bg-background/95 backdrop-blur-sm border-b border-border">
         <div className="flex items-center justify-center space-x-4 p-3">
-          <div className={`flex items-center space-x-2 ${selectedService ? 'text-primary' : 'text-muted-foreground'}`}>
-            <CheckCircle className={`w-4 h-4 ${selectedService ? 'fill-current' : ''}`} />
+          <div className={`flex items-center space-x-2 ${selectedServices.length > 0 ? 'text-primary' : 'text-muted-foreground'}`}>
+            <CheckCircle className={`w-4 h-4 ${selectedServices.length > 0 ? 'fill-current' : ''}`} />
             <span className="text-sm">Service</span>
           </div>
           <div className={`flex items-center space-x-2 ${selectedStaff ? 'text-primary' : 'text-muted-foreground'}`}>
@@ -108,14 +124,14 @@ export default function Booking({ onBack }: BookingProps) {
         <section>
           <div className="flex items-center space-x-2 mb-4">
             <Scissors className="w-5 h-5 text-primary" />
-            <h2 className="text-lg font-semibold">Choose Service</h2>
-            {selectedService && <Badge variant="secondary">Selected</Badge>}
+            <h2 className="text-lg font-semibold">Choose Services</h2>
+            {selectedServices.length > 0 && <Badge variant="secondary">{selectedServices.length} Selected</Badge>}
           </div>
-          <ServiceGrid onBookService={handleServiceSelect} />
+          <ServiceGrid selectedServices={selectedServices} onBookService={handleServiceSelect} />
         </section>
 
         {/* Staff Selection */}
-        {selectedService && (
+        {selectedServices.length > 0 && (
           <section>
             <div className="flex items-center space-x-2 mb-4">
               <User className="w-5 h-5 text-primary" />
@@ -154,27 +170,85 @@ export default function Booking({ onBack }: BookingProps) {
               <CardTitle>Booking Summary</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Service:</span>
-                  <span className="font-medium">{selectedService}</span>
+              <div className="space-y-4">
+                {/* Services Section */}
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2">
+                    <Scissors className="w-4 h-4 text-muted-foreground" />
+                    <span className="text-muted-foreground font-medium">Selected Services:</span>
+                  </div>
+                  <div className="space-y-2">
+                    {(() => {
+                      const { services: serviceDetails, totalPrice, totalDuration } = calculateServiceTotals(selectedServices);
+                      return (
+                        <>
+                          {serviceDetails.map((service, index) => (
+                            <div key={service.id} className="bg-muted/50 rounded-lg p-3">
+                              <div className="flex justify-between items-start">
+                                <div className="flex-1">
+                                  <h4 className="font-medium text-sm">{service.name}</h4>
+                                  <p className="text-xs text-muted-foreground mt-1">{service.category}</p>
+                                </div>
+                                <div className="text-right">
+                                  <div className="font-medium text-sm">${service.price}</div>
+                                  <div className="text-xs text-muted-foreground">{service.duration}min</div>
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                          
+                          {/* Totals */}
+                          <div className="border-t border-border pt-3 mt-3">
+                            <div className="flex justify-between items-center text-sm">
+                              <div className="flex items-center gap-1">
+                                <DollarSign className="w-4 h-4 text-muted-foreground" />
+                                <span className="text-muted-foreground">Total Price:</span>
+                              </div>
+                              <span className="font-bold text-primary">${totalPrice}</span>
+                            </div>
+                            <div className="flex justify-between items-center text-sm mt-1">
+                              <div className="flex items-center gap-1">
+                                <Clock className="w-4 h-4 text-muted-foreground" />
+                                <span className="text-muted-foreground">Total Duration:</span>
+                              </div>
+                              <span className="font-medium">{totalDuration} minutes</span>
+                            </div>
+                          </div>
+                        </>
+                      );
+                    })()}
+                  </div>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Staff:</span>
+
+                {/* Staff Section */}
+                <div className="flex justify-between items-center">
+                  <div className="flex items-center gap-2">
+                    <User className="w-4 h-4 text-muted-foreground" />
+                    <span className="text-muted-foreground">Staff:</span>
+                  </div>
                   <span className="font-medium">{staff.find(s => s.id === selectedStaff)?.name}</span>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Date & Time:</span>
+
+                {/* Date & Time Section */}
+                <div className="flex justify-between items-center">
+                  <div className="flex items-center gap-2">
+                    <Calendar className="w-4 h-4 text-muted-foreground" />
+                    <span className="text-muted-foreground">Date & Time:</span>
+                  </div>
                   <span className="font-medium">{selectedDateTime?.date} at {selectedDateTime?.time}</span>
                 </div>
               </div>
+              
               <Button 
                 onClick={handleConfirmBooking}
                 className="w-full"
                 size="lg"
                 data-testid="button-confirm-final-booking"
               >
-                Confirm Booking
+                Confirm Booking - ${(() => {
+                  const { totalPrice } = calculateServiceTotals(selectedServices);
+                  return totalPrice;
+                })()}
               </Button>
             </CardContent>
           </Card>
