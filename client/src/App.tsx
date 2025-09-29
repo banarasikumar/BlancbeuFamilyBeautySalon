@@ -8,6 +8,7 @@ import Home from "@/pages/Home";
 import Booking from "@/pages/Booking";
 import Chat from "@/pages/Chat";
 import Locate from "@/pages/Locate";
+import Settings from "@/pages/Settings";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -47,6 +48,9 @@ function Router() {
         </Route>
         <Route path="/locate">
           <Locate onBack={handleBack} />
+        </Route>
+        <Route path="/settings">
+          <Settings onBack={handleBack} />
         </Route>
         <Route component={NotFound} />
       </Switch>

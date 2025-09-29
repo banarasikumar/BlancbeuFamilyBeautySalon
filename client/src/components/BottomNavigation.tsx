@@ -1,4 +1,4 @@
-import { Home, Calendar, MessageCircle, MapPin } from "lucide-react";
+import { Home, Calendar, MessageCircle, MapPin, Settings } from "lucide-react";
 import { useLocation } from "wouter";
 
 interface BottomNavProps {
@@ -13,10 +13,26 @@ export default function BottomNavigation({ onNavigate }: BottomNavProps) {
     { icon: Calendar, label: "Booking", path: "/booking" },
     { icon: MessageCircle, label: "Chat", path: "/chat" },
     { icon: MapPin, label: "Locate", path: "/locate" },
+    { icon: Settings, label: "Settings", path: "/settings" },
   ];
 
   const handleNavClick = (path: string) => {
     console.log(`Navigating to ${path}`);
+    
+    // Handle special navigation cases
+    if (path === "/chat") {
+      // Open WhatsApp chat
+      window.open("https://wa.me/", "_blank");
+      return;
+    }
+    
+    if (path === "/locate") {
+      // Open Google Maps location
+      window.open("https://maps.app.goo.gl/hTgqSBHZCi6grmoc6", "_blank");
+      return;
+    }
+    
+    // Regular navigation for other paths
     onNavigate?.(path);
   };
 
