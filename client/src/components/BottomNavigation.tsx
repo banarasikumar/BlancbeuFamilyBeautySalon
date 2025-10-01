@@ -22,13 +22,13 @@ export default function BottomNavigation({ onNavigate }: BottomNavProps) {
     // Handle special navigation cases
     if (path === "/chat") {
       // Open WhatsApp chat
-      window.open("https://wa.me/", "_blank");
+      window.open("https://api.whatsapp.com/send?phone=919229915277&text=Hello%20BlancBeu%2C%0AI%20would%20Like%20to%20Book%20a%20service%20", "_blank", "noopener,noreferrer");
       return;
     }
     
     if (path === "/locate") {
       // Open Google Maps location
-      window.open("https://maps.app.goo.gl/hTgqSBHZCi6grmoc6", "_blank");
+      window.open("https://maps.app.goo.gl/hTgqSBHZCi6grmoc6", "_blank", "noopener,noreferrer");
       return;
     }
     
