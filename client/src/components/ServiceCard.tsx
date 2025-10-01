@@ -67,7 +67,7 @@ export default function ServiceCard({
           
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <span className="text-lg font-bold text-primary">${price}</span>
+              <span className="text-lg font-bold text-primary">₹{price}</span>
               <div className="flex items-center space-x-1 text-muted-foreground">
                 <Clock className="w-4 h-4" />
                 <span className="text-sm">{duration}min</span>

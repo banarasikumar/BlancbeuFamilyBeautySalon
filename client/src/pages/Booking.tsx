@@ -6,7 +6,7 @@ import ThemeToggle from "@/components/ThemeToggle";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, CheckCircle, Calendar, User, Scissors, DollarSign, Clock } from "lucide-react";
+import { ArrowLeft, CheckCircle, Calendar, User, Scissors, IndianRupee, Clock } from "lucide-react";
 import { calculateServiceTotals } from "@shared/services";
 
 interface BookingProps {
@@ -190,7 +190,7 @@ export default function Booking({ onBack }: BookingProps) {
                                   <p className="text-xs text-muted-foreground mt-1">{service.category}</p>
                                 </div>
                                 <div className="text-right">
-                                  <div className="font-medium text-sm">${service.price}</div>
+                                  <div className="font-medium text-sm">₹{service.price}</div>
                                   <div className="text-xs text-muted-foreground">{service.duration}min</div>
                                 </div>
                               </div>
@@ -201,10 +201,10 @@ export default function Booking({ onBack }: BookingProps) {
                           <div className="border-t border-border pt-3 mt-3">
                             <div className="flex justify-between items-center text-sm">
                               <div className="flex items-center gap-1">
-                                <DollarSign className="w-4 h-4 text-muted-foreground" />
+                                <IndianRupee className="w-4 h-4 text-muted-foreground" />
                                 <span className="text-muted-foreground">Total Price:</span>
                               </div>
-                              <span className="font-bold text-primary">${totalPrice}</span>
+                              <span className="font-bold text-primary">₹{totalPrice}</span>
                             </div>
                             <div className="flex justify-between items-center text-sm mt-1">
                               <div className="flex items-center gap-1">
@@ -245,7 +245,7 @@ export default function Booking({ onBack }: BookingProps) {
                 size="lg"
                 data-testid="button-confirm-final-booking"
               >
-                Confirm Booking - ${(() => {
+                Confirm Booking - ₹{(() => {
                   const { totalPrice } = calculateServiceTotals(selectedServices);
                   return totalPrice;
                 })()}
