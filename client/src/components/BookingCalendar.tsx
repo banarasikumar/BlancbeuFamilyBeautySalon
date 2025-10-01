@@ -54,7 +54,7 @@ export default function BookingCalendar({ onBookSlot }: BookingCalendarProps) {
   };
 
   return (
-    <Card>
+    <Card className="card-3d">
       <CardHeader>
         <CardTitle className="flex items-center space-x-2">
           <Calendar className="w-5 h-5" />
@@ -82,7 +82,7 @@ export default function BookingCalendar({ onBookSlot }: BookingCalendarProps) {
 
         {/* Time Selection */}
         {selectedDate && (
-          <div>
+          <div className="slide-in-up">
             <h4 className="font-medium mb-3 flex items-center space-x-2">
               <Clock className="w-4 h-4" />
               <span>Available Times</span>
@@ -114,7 +114,7 @@ export default function BookingCalendar({ onBookSlot }: BookingCalendarProps) {
         {selectedDate && selectedTime && (
           <Button 
             onClick={handleConfirmBooking}
-            className="w-full"
+            className="w-full scale-in"
             data-testid="button-confirm-booking"
           >
             Confirm Booking for {selectedDate} at {selectedTime}

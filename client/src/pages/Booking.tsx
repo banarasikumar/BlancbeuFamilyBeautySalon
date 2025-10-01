@@ -6,6 +6,7 @@ import ThemeToggle from "@/components/ThemeToggle";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { useToast } from "@/hooks/use-toast";
 import { ArrowLeft, CheckCircle, Calendar, User, Scissors, IndianRupee, Clock } from "lucide-react";
 import { calculateServiceTotals } from "@shared/services";
 
@@ -14,6 +15,7 @@ interface BookingProps {
 }
 
 export default function Booking({ onBack }: BookingProps) {
+  const { toast } = useToast();
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
   const [selectedStaff, setSelectedStaff] = useState<string>("");
   const [selectedDateTime, setSelectedDateTime] = useState<{date: string, time: string} | null>(null);
@@ -79,6 +81,15 @@ export default function Booking({ onBack }: BookingProps) {
         staff: selectedStaff,
         dateTime: selectedDateTime
       });
+      
+      const { totalPrice } = calculateServiceTotals(selectedServices);
+      const staffMember = staff.find(s => s.id === selectedStaff);
+      
+      toast({
+        title: "Booking Confirmed!",
+        description: `Your appointment with ${staffMember?.name} on ${selectedDateTime.date} at ${selectedDateTime.time} for ₹${totalPrice} has been confirmed.`,
+      });
+      
       // TODO: Submit booking to backend
     }
   };
@@ -121,7 +132,7 @@ export default function Booking({ onBack }: BookingProps) {
       {/* Main Content */}
       <main className="pt-32 pb-24 px-4 space-y-8">
         {/* Service Selection */}
-        <section>
+        <section className="slide-in-up">
           <div className="flex items-center space-x-2 mb-4">
             <Scissors className="w-5 h-5 text-primary" />
             <h2 className="text-lg font-semibold">Choose Services</h2>
@@ -132,7 +143,7 @@ export default function Booking({ onBack }: BookingProps) {
 
         {/* Staff Selection */}
         {selectedServices.length > 0 && (
-          <section>
+          <section className="slide-in-up">
             <div className="flex items-center space-x-2 mb-4">
               <User className="w-5 h-5 text-primary" />
               <h2 className="text-lg font-semibold">Select Staff</h2>
@@ -153,7 +164,7 @@ export default function Booking({ onBack }: BookingProps) {
 
         {/* Date & Time Selection */}
         {selectedStaff && (
-          <section>
+          <section className="slide-in-up">
             <div className="flex items-center space-x-2 mb-4">
               <Calendar className="w-5 h-5 text-primary" />
               <h2 className="text-lg font-semibold">Pick Date & Time</h2>
@@ -165,9 +176,12 @@ export default function Booking({ onBack }: BookingProps) {
 
         {/* Booking Summary & Confirm */}
         {isComplete && (
-          <Card>
+          <Card className="card-3d scale-in">
             <CardHeader>
-              <CardTitle>Booking Summary</CardTitle>
+              <CardTitle className="flex items-center gap-2">
+                <CheckCircle className="w-5 h-5 text-primary" />
+                Booking Summary
+              </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-4">
