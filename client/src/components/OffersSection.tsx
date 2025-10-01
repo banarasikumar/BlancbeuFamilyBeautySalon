@@ -24,8 +24,8 @@ export default function OffersSection({ onBookNow }: OffersSectionProps) {
       id: 2,
       title: "Student Discount",
       subtitle: "Exclusive Offer",
-      description: "Up to 40% OFF",
-      price: "With Valid ID",
+      description: "With Valid ID",
+      price: "Up to 40% OFF",
       icon: GraduationCap,
       gradient: "gradient-luxury",
       badge: "Student Special",
@@ -33,14 +33,25 @@ export default function OffersSection({ onBookNow }: OffersSectionProps) {
     },
     {
       id: 3,
-      title: "Durga Pooja Festival",
-      subtitle: "Festive Special",
-      description: "₹50 OFF + ₹500 Coupon",
-      price: "Next Visit",
+      title: "Durga Puja Special",
+      subtitle: "Festive Discount",
+      description: "On all services",
+      price: "Flat 30% OFF",
       icon: PartyPopper,
-      gradient: "gradient-rose-gold",
-      badge: "Festival Offer",
-      badgeColor: "bg-purple-500 text-white"
+      gradient: "gradient-festive",
+      badge: "Durga Puja",
+      badgeColor: "bg-orange-500 text-white"
+    },
+    {
+      id: 4,
+      title: "Next Visit Reward",
+      subtitle: "Loyalty Bonus",
+      description: "Book today & get",
+      price: "₹50 OFF + ₹500 Coupon",
+      icon: Sparkles,
+      gradient: "gradient-luxury",
+      badge: "Bonus Offer",
+      badgeColor: "bg-emerald-500 text-white"
     }
   ];
 
@@ -55,7 +66,7 @@ export default function OffersSection({ onBookNow }: OffersSectionProps) {
         <p className="text-sm text-muted-foreground">Exclusive deals just for you!</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {offers.map((offer, index) => {
           const Icon = offer.icon;
           return (

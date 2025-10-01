@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import ProgressiveImage from "@/components/ProgressiveImage";
 import heroImage from "@assets/generated_images/Luxury_salon_interior_hero_7aea5d7f.png";
 
 interface HeroSectionProps {
@@ -13,19 +14,23 @@ export default function HeroSection({ onBookNow }: HeroSectionProps) {
 
   return (
     <section className="relative h-[60vh] min-h-[400px] w-full overflow-hidden rounded-lg card-3d">
-      <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform hover:scale-105 duration-700"
-        style={{ backgroundImage: `url(${heroImage})` }}
+      <ProgressiveImage
+        src={heroImage}
+        alt="BlancBeu Family Beauty Salon - Luxury Interior"
+        className="absolute inset-0 transition-transform hover:scale-105 duration-700"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
       
       <div className="relative z-10 flex flex-col justify-end h-full p-6 text-white">
         <div className="space-y-4 slide-in-up">
           <h1 className="text-4xl md:text-5xl font-serif font-bold leading-tight">
-            Welcome to <span className="text-primary-foreground">Blancbeu</span>
+            Welcome to <span className="text-primary-foreground">BlancBeu</span>
           </h1>
+          <p className="text-2xl font-serif italic text-accent mb-2">
+            Where Beauty Meets Tradition
+          </p>
           <p className="text-lg text-white/90 max-w-md">
-            Experience premium beauty services in our modern, luxurious salon designed for the next generation.
+            Experience premium beauty services for the whole family in our modern, luxurious salon.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 pt-2">
             <Button 

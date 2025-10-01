@@ -1,6 +1,6 @@
 import { useState } from "react";
 import BookingCalendar from "@/components/BookingCalendar";
-import ServiceGrid from "@/components/ServiceGrid";
+import CategoryServicesBrowse from "@/components/CategoryServicesBrowse";
 import StaffCard from "@/components/StaffCard";
 import ThemeToggle from "@/components/ThemeToggle";
 import { Button } from "@/components/ui/button";
@@ -136,9 +136,9 @@ export default function Booking({ onBack }: BookingProps) {
           <div className="flex items-center space-x-2 mb-4">
             <Scissors className="w-5 h-5 text-primary" />
             <h2 className="text-lg font-semibold">Choose Services</h2>
-            {selectedServices.length > 0 && <Badge variant="secondary">{selectedServices.length} Selected</Badge>}
+            {selectedServices.length > 0 && <Badge variant="secondary" className="bg-primary/10 text-primary">{selectedServices.length} Selected</Badge>}
           </div>
-          <ServiceGrid selectedServices={selectedServices} onBookService={handleServiceSelect} />
+          <CategoryServicesBrowse selectedServices={selectedServices} onBookService={handleServiceSelect} />
         </section>
 
         {/* Staff Selection */}

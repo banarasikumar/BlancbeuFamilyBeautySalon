@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import ProgressiveImage from "@/components/ProgressiveImage";
 import { Clock, Star, Check } from "lucide-react";
 
 interface ServiceCardProps {
@@ -36,9 +37,10 @@ export default function ServiceCard({
   return (
     <Card className={`card-3d hover-elevate group cursor-pointer ${isSelected ? 'ring-2 ring-primary bg-primary/5' : ''}`}>
       <div className="relative overflow-hidden rounded-t-lg">
-        <div 
-          className="h-48 bg-cover bg-center transition-transform group-hover:scale-110 duration-500"
-          style={{ backgroundImage: `url(${image})` }}
+        <ProgressiveImage 
+          src={image}
+          alt={name}
+          className="h-48 transition-transform group-hover:scale-110 duration-500"
         />
         <div className="absolute top-3 left-3">
           <Badge variant="secondary" className="bg-background/80 backdrop-blur-sm">
