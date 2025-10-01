@@ -48,22 +48,22 @@ export default function Home({ onNavigateToBooking, onBookService }: HomeProps) 
         {/* Features */}
         <section className="px-4 py-8">
           <div className="grid grid-cols-3 gap-4 text-center">
-            <div className="space-y-2">
-              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
+            <div className="space-y-2 scale-in">
+              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto float-animation">
                 <Star className="w-6 h-6 text-primary" />
               </div>
               <h3 className="font-semibold text-sm">5-Star Rated</h3>
               <p className="text-xs text-muted-foreground">Premium service quality</p>
             </div>
-            <div className="space-y-2">
-              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
+            <div className="space-y-2 scale-in" style={{ animationDelay: '0.1s' }}>
+              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto float-animation" style={{ animationDelay: '0.5s' }}>
                 <Award className="w-6 h-6 text-primary" />
               </div>
               <h3 className="font-semibold text-sm">Expert Staff</h3>
               <p className="text-xs text-muted-foreground">Certified professionals</p>
             </div>
-            <div className="space-y-2">
-              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
+            <div className="space-y-2 scale-in" style={{ animationDelay: '0.2s' }}>
+              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto float-animation" style={{ animationDelay: '1s' }}>
                 <Sparkles className="w-6 h-6 text-primary" />
               </div>
               <h3 className="font-semibold text-sm">Modern Tech</h3>
@@ -88,10 +88,10 @@ export default function Home({ onNavigateToBooking, onBookService }: HomeProps) 
 
         {/* Call to Action */}
         <section className="px-4 py-8">
-          <div className="bg-gradient-to-r from-primary/10 to-accent/10 rounded-lg p-6 text-center">
-            <h3 className="text-xl font-serif font-bold mb-2">Ready for Your Transformation?</h3>
-            <p className="text-muted-foreground mb-4">Book your appointment today and experience luxury beauty care.</p>
-            <Button size="lg" onClick={handleBookNow} data-testid="button-cta-book">
+          <div className="gradient-rose-gold rounded-lg p-6 text-center card-3d slide-in-up">
+            <h3 className="text-xl font-serif font-bold mb-2 text-white">Ready for Your Transformation?</h3>
+            <p className="text-white/90 mb-4">Book your appointment today and experience luxury beauty care.</p>
+            <Button size="lg" onClick={handleBookNow} data-testid="button-cta-book" className="pulse-glow">
               Book Your Appointment
             </Button>
           </div>

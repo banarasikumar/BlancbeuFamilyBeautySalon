@@ -34,10 +34,10 @@ export default function ServiceCard({
   };
 
   return (
-    <Card className={`overflow-hidden hover-elevate group cursor-pointer ${isSelected ? 'ring-2 ring-primary bg-primary/5' : ''}`}>
-      <div className="relative">
+    <Card className={`card-3d hover-elevate group cursor-pointer ${isSelected ? 'ring-2 ring-primary bg-primary/5' : ''}`}>
+      <div className="relative overflow-hidden rounded-t-lg">
         <div 
-          className="h-48 bg-cover bg-center transition-transform group-hover:scale-105"
+          className="h-48 bg-cover bg-center transition-transform group-hover:scale-110 duration-500"
           style={{ backgroundImage: `url(${image})` }}
         />
         <div className="absolute top-3 left-3">

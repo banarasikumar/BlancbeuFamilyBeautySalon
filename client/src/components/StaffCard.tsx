@@ -35,7 +35,7 @@ export default function StaffCard({
 
   return (
     <Card 
-      className={`cursor-pointer transition-all hover-elevate ${
+      className={`card-3d cursor-pointer transition-all hover-elevate ${
         isSelected ? "ring-2 ring-primary bg-primary/5" : ""
       }`}
       onClick={handleSelect}
