@@ -1,5 +1,6 @@
 import HeroSection from "@/components/HeroSection";
 import ServiceGrid from "@/components/ServiceGrid";
+import OffersSection from "@/components/OffersSection";
 import ThemeToggle from "@/components/ThemeToggle";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -40,6 +41,9 @@ export default function Home({ onNavigateToBooking, onBookService }: HomeProps) 
         <section className="p-4">
           <HeroSection onBookNow={handleBookNow} />
         </section>
+
+        {/* Special Offers Section */}
+        <OffersSection onBookNow={handleBookNow} />
 
         {/* Features */}
         <section className="px-4 py-8">
